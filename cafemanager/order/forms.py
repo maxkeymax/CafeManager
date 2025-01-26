@@ -4,8 +4,9 @@ from .models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('table_number', 'items')
+        fields = ('id', 'table_number', 'items')
         labels = {
+            'id': 'Номер заказа',
             'table_number': 'Номер стола',
             'items': 'Блюдо/Стоимость (через запятую)',
         }
@@ -31,6 +32,7 @@ class OrderForm(forms.ModelForm):
     
     
 class OrderFilterForm(forms.Form):
+    order_id = forms.IntegerField(label='Номер заказа', required=False) 
     table_number = forms.IntegerField(label='Номер стола', required=False)
     status = forms.ChoiceField(label='Статус заказа', choices=[('все', 'Все')] + Order.STATUS_CHOISES, required=False)
     

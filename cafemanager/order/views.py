@@ -29,8 +29,11 @@ class OrderListView(ListView):
         queryset = super().get_queryset()
         form = OrderFilterForm(self.request.GET)
         if form.is_valid():
+            order_id = form.cleaned_data['order_id']
             table_number = form.cleaned_data['table_number']
             status = form.cleaned_data['status']
+            if order_id:
+                queryset = queryset.filter(id=order_id)
             if table_number:
                 queryset = queryset.filter(table_number=table_number)
             if status and status != 'все':
