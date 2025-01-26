@@ -11,6 +11,8 @@
       <tr>
         <th>Номер заказа</th>
         <th>Номер стола</th>
+        <th>Список блюд</th>
+        <th>Общая стоимость заказа</th>
         <th>Статус</th>
         <th>Действия</th>
       </tr>
@@ -20,6 +22,8 @@
       <tr>
         <td>{{ order.id }}</td>
         <td>{{ order.table_number }}</td>
+        <td>{{ order.items }}</td>
+        <td>{{ order.total_price }}</td>
         <td>{{ order.status }}</td>
         <td><a href="{% url 'delete_order' order.pk %}">Удалить</a></td>
       </tr>

@@ -40,5 +40,5 @@ class OrderForm(forms.ModelForm):
     
 class OrderFilterForm(forms.Form):
     table_number = forms.IntegerField(label='Номер стола', required=False)
-    status = forms.ChoiceField(label='Статус заказа', choices=Order.STATUS_CHOISES, required=False)
+    status = forms.ChoiceField(label='Статус заказа', choices=[('все', 'Все')] + Order.STATUS_CHOISES, required=False)
     

@@ -32,7 +32,7 @@ class OrderListView(ListView):
             status = form.cleaned_data['status']
             if table_number:
                 queryset = queryset.filter(table_number=table_number)
-            if status:
+            if status and status != 'все':
                 queryset = queryset.filter(status=status)
         return queryset
 
