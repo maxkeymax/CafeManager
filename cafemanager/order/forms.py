@@ -36,3 +36,9 @@ class OrderForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+    
+class OrderFilterForm(forms.Form):
+    table_number = forms.IntegerField(label='Номер стола', required=False)
+    status = forms.ChoiceField(label='Статус заказа', choices=Order.STATUS_CHOISES, required=False)
+    
