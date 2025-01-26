@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
-from .forms import OrderForm, OrderFilterForm
+from .forms import OrderForm, OrderFilterForm, OrderStatusForm
 from .models import Order
 
 def add_order(request):
@@ -22,6 +22,7 @@ class OrderListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = OrderFilterForm()
+        context['STATUS_CHOISES'] = Order.STATUS_CHOISES
         return context
     
     def get_queryset(self):
@@ -35,6 +36,16 @@ class OrderListView(ListView):
             if status and status != 'все':
                 queryset = queryset.filter(status=status)
         return queryset
+    
+    def post(self, request, *args, **kwargs):
+        status_form = OrderStatusForm(request.POST)
+        if status_form.is_valid():
+            table_number = request.POST.get('table_number')
+            order = Order.objects.get(table_number=table_number)
+            order.status = status_form.cleaned_data['status']
+            order.save()
+            return redirect('orders_management')
+        return redirect('orders_management')
 
 def delete_order(request, pk):
     order = Order.objects.get(pk=pk)

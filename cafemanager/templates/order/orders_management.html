@@ -25,7 +25,19 @@
         <td>{{ order.items }}</td>
         <td>{{ order.total_price }}</td>
         <td>{{ order.status }}</td>
-        <td><a href="{% url 'delete_order' order.pk %}">Удалить</a></td>
+        <td>
+          <form method="post">
+            {% csrf_token %}
+            <select name="status">
+              {% for status, label in STATUS_CHOISES %}
+                <option value="{{ status }}" {% if order.status == status %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+            <input type="hidden" name="table_number" value="{{ order.table_number }}">
+            <button type="submit">Изменить статус</button>
+          </form>
+          <a href="{% url 'delete_order' order.pk %}">Удалить</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

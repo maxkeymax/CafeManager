@@ -7,20 +7,12 @@ class OrderForm(forms.ModelForm):
         fields = ('table_number', 'items')
         labels = {
             'table_number': 'Номер стола',
-            'items': 'Блюда/Стоимость через запятую',
+            'items': 'Блюдо/Стоимость (через запятую)',
         }
         widgets = {
             'items': forms.Textarea(attrs={'rows': 5}),
         }
-        # error_messages = {
-        #     'table_number': {
-        #         'equired': 'Пожалуйста, введите номер стола.',
-        #     },
-        #     'items': {
-        #         'equired': 'Пожалуйста, введите список блюд.',
-        #     },
-        # }
-        
+       
     def save(self, commit=True):
         instance = super().save(commit=False)
         items = instance.items
@@ -42,3 +34,6 @@ class OrderFilterForm(forms.Form):
     table_number = forms.IntegerField(label='Номер стола', required=False)
     status = forms.ChoiceField(label='Статус заказа', choices=[('все', 'Все')] + Order.STATUS_CHOISES, required=False)
     
+    
+class OrderStatusForm(forms.Form):
+    status = forms.ChoiceField(label='Статус', choices=Order.STATUS_CHOISES, required=True)
