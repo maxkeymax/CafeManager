@@ -3,9 +3,9 @@ from django.db import models
 
 class Order(models.Model):
     STATUS_CHOISES = [
-        ('в ожидании', 'В ожидании'),
-        ('готово', 'Готово'),
-        ('оплачено', 'Оплачено')
+        ('В ожидании', 'В ожидании'),
+        ('Готово', 'Готово'),
+        ('Оплачено', 'Оплачено')
     ]
     table_number = models.IntegerField(verbose_name='Номер стола')
     items = models.TextField(verbose_name='Заказанные блюда')

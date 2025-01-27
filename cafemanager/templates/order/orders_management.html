@@ -16,13 +16,13 @@
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
             <tr>
-              <th style="white-space: nowrap;">Номер заказа</th>
-              <th style="white-space: nowrap;">Номер стола</th>
+              <th style="white-space: nowrap;">Заказ №</th>
+              <th style="white-space: nowrap;">Стол №</th>
               <th style="white-space: nowrap;">Список блюд</th>
-              <th style="white-space: nowrap;">Общая стоимость заказа</th>
+              <th style="white-space: nowrap;">Общая стоимость</th>
               <th style="white-space: nowrap;">Статус</th>
-              <th style="white-space: nowrap;">Выбор статуса заказа</th>
-              <th style="white-space: nowrap;">Действия</th>
+              <th style="white-space: nowrap;">Выбор статуса</th>
+              <th style="white-space: nowrap;">Удаление</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +32,7 @@
               <td>{{ order.table_number }}</td>
               <td>{{ order.items }}</td>
               <td>{{ order.total_price }}</td>
-              <td>{{ order.status }}</td>
+              <td style="white-space: nowrap;">{{ order.status }}</td>
               <td>
                 <form method="post" class="form-inline">
                   {% csrf_token %}

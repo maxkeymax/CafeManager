@@ -6,8 +6,8 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ('id', 'table_number', 'items')
         labels = {
-            'id': 'Номер заказа',
-            'table_number': 'Номер стола',
+            'id': 'Заказ №',
+            'table_number': 'Стол №',
             'items': 'Блюдо/Стоимость (через запятую)',
         }
         widgets = {
@@ -32,9 +32,9 @@ class OrderForm(forms.ModelForm):
     
     
 class OrderFilterForm(forms.Form):
-    order_id = forms.IntegerField(label='Номер заказа', required=False) 
-    table_number = forms.IntegerField(label='Номер стола', required=False)
-    status = forms.ChoiceField(label='Статус заказа', choices=[('все', 'Все')] + Order.STATUS_CHOISES, required=False)
+    order_id = forms.IntegerField(label='Заказ №', required=False) 
+    table_number = forms.IntegerField(label='Стол №', required=False)
+    status = forms.ChoiceField(label='Статус', choices=[('Все', 'Все')] + Order.STATUS_CHOISES, required=False)
     
     
 class OrderStatusForm(forms.Form):
