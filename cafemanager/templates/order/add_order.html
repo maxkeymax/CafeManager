@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Добавить заказ</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Добавить</button>
-    </form>
+    <h1 class="text-center">Добавить заказ</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
