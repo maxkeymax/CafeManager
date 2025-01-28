@@ -29,6 +29,13 @@ class OrderForm(forms.ModelForm):
         self.cleaned_data['total_price'] = total_price
         return items
     
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.total_price = self.cleaned_data['total_price']
+        if commit:
+            instance.save()
+        return instance
+    
     
 class OrderFilterForm(forms.Form):
     order_id = forms.IntegerField(label='Заказ №', required=False) 

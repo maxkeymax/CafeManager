@@ -11,7 +11,6 @@ def add_order(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'Заказ успешно добавлен!')
-            print(messages)
             return redirect('add_order')
     else:
         form = OrderForm()
