@@ -14,21 +14,20 @@ class OrderForm(forms.ModelForm):
             'items': forms.Textarea(attrs={'rows': 5}),
         }
        
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        items = instance.items
-        if items:
-            total_price = 0
-            for item in items.split(','):
+    def clean_items(self):
+        items = self.cleaned_data['items']
+        total_price = 0
+        for item in items.split(','):
+            if '/' in item:
                 try:
                     _, price = item.split('/')
                     total_price += int(price)
                 except ValueError:
                     raise forms.ValidationError('Неправильный формат ввода блюд и цен')
-            instance.total_price = total_price
-        if commit:
-            instance.save()
-        return instance
+            else:
+                raise forms.ValidationError('Неправильный формат ввода блюд и цен')
+        self.cleaned_data['total_price'] = total_price
+        return items
     
     
 class OrderFilterForm(forms.Form):
