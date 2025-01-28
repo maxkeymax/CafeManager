@@ -54,3 +54,16 @@ def delete_order(request, pk):
     order = Order.objects.get(pk=pk)
     order.delete()
     return redirect('orders_management')
+
+
+class IncomeCalculationListView(ListView):
+    model = Order
+    template_name = 'order/income_calculation.html'
+    
+    def get_queryset(self):
+        return Order.objects.filter(status='Оплачено')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_price'] = sum(order.total_price for order in self.get_queryset())
+        return context
