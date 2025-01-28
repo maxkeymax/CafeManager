@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework import generics
+from order.models import Order
+from .serializers import OrderCreateSerializer
 
-# Create your views here.
+class OrderCreateView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderCreateSerializer
