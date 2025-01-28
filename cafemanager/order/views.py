@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
@@ -9,6 +10,8 @@ def add_order(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, 'Заказ успешно добавлен!')
+            print(messages)
             return redirect('add_order')
     else:
         form = OrderForm()
@@ -36,7 +39,7 @@ class OrderListView(ListView):
                 queryset = queryset.filter(id=order_id)
             if table_number:
                 queryset = queryset.filter(table_number=table_number)
-            if status and status != 'все':
+            if status and status != 'Все':
                 queryset = queryset.filter(status=status)
         return queryset
     
