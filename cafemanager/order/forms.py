@@ -1,3 +1,4 @@
+import json
 from django import forms
 from .models import Order
 
@@ -15,23 +16,18 @@ class OrderForm(forms.ModelForm):
         }
        
     def clean_items(self):
-        items = self.cleaned_data['items']
-        total_price = 0
-        for item in items.split(','):
-            if '/' in item:
-                try:
-                    _, price = item.split('/')
-                    total_price += int(price)
-                except ValueError:
-                    raise forms.ValidationError('Неправильный формат ввода блюд и цен')
-            else:
-                raise forms.ValidationError('Неправильный формат ввода блюд и цен')
-        self.cleaned_data['total_price'] = total_price
-        return items
+        items_str = self.cleaned_data['items']
+        try:
+            items = Order.parse_items(items_str)
+            self.cleaned_data['items'] = json.dumps(items)
+        except ValueError as e:
+            raise forms.ValidationError(str(e))
+        return self.cleaned_data['items']
     
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.total_price = self.cleaned_data['total_price']
+        instance.total_price = sum(item['price'] for item in json.loads(self.cleaned_data['items']))
+
         if commit:
             instance.save()
         return instance
