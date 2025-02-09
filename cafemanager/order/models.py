@@ -1,3 +1,4 @@
+import json
 from django.db import models
 
 
@@ -38,3 +39,6 @@ class Order(models.Model):
             else:
                 raise ValueError(f"Некорректный формат записи блюда и цены: {item}")
         return items
+
+    def get_items(self):
+        return json.loads(self.items)

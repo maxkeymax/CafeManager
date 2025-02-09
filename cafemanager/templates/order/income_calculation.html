@@ -16,11 +16,15 @@
       <tr>
         <td>{{ order.id }}</td>
         <td>{{ order.table_number }}</td>
-        <td>{{ order.items }}</td>
+        <td>
+            {% for item in order.get_items %}
+              {{ item.item }} - {{ item.price }} руб.<br>
+            {% endfor %}
+        </td>
         <td>{{ order.total_price }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <p class="text-center">Выручка за смену составляет: {{ total_price }}</p>
+  <p class="text-center">Выручка за смену составляет: {{ total_price }} руб.</p>
 {% endblock %}

@@ -30,8 +30,12 @@
             <tr>
               <td>{{ order.id }}</td>
               <td>{{ order.table_number }}</td>
-              <td>{{ order.items }}</td>
-              <td>{{ order.total_price }}</td>
+              <td>
+                {% for item in order.get_items %}
+                <span style="white-space: nowrap;">{{ item.item }} - {{ item.price }} руб.</span><br>
+                {% endfor %}
+              </td>
+              <td>{{ order.total_price }} руб.</td>
               <td style="white-space: nowrap;">{{ order.status }}</td>
               <td>
                 <form method="post" class="form-inline">
