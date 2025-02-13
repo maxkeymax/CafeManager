@@ -6,7 +6,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ('id', 'table_number', 'items')
         
     def to_representation(self, instance):
         ret = super().to_representation(instance)
