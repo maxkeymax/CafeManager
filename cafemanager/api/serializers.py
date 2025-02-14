@@ -6,10 +6,4 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = ('id', 'table_number', 'items')
-        
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        if 'items' in ret:
-            ret['items'] = json.loads(ret['items'])
-        return ret
+        fields = ('id', 'table_number', 'items', 'total_price')
