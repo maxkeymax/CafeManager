@@ -13,28 +13,22 @@ class OrderForm(forms.ModelForm):
             'items': forms.Textarea(attrs={'rows': 5}),
         }
        
-    # def clean_items(self):
-    #     items_str = self.cleaned_data['items']
-    #     try:
-    #         items = Order.parse_items(items_str)
-    #         self.cleaned_data['items'] = items
-    #     except ValueError as e:
-    #         raise forms.ValidationError(str(e))
-    #     return self.cleaned_data['items']
-    
-    # def save(self, commit=True):
-    #     instance = super().save(commit=False)
-    #     instance.total_price = sum(item['price'] for item in self.cleaned_data['items'])
-
-    #     if commit:
-    #         instance.save()
-    #     return instance
+    def clean_items(self):
+        items_str = self.cleaned_data['items']
+        
+        try:
+            items_parsed = Order.parse_items(items_str)
+        except ValueError as e:
+            raise forms.ValidationError(str(e))
+        
+        self.cleaned_data['items_parsed'] = items_parsed
+        return items_str
     
     def save(self, commit=True):
         instance = super().save(commit=False)
-        items = self.cleaned_data['items']
-        instance.items = items
-        instance.items_parsed = Order.parse_items(items)
+        
+        items_parsed = self.cleaned_data['items_parsed']
+        instance.items_parsed = items_parsed
         instance.total_price = sum(item['price'] for item in instance.items_parsed)
 
         if commit:
