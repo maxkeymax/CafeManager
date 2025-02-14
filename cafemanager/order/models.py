@@ -10,8 +10,20 @@ class Order(models.Model):
     ]
     table_number = models.IntegerField(verbose_name='Номер стола')
     items = models.TextField(verbose_name='Заказанные блюда')
-    total_price = models.IntegerField(verbose_name='Общая стоимость', default=0)
-    status = models.CharField(max_length=10, choices=STATUS_CHOISES, default='В ожидании', verbose_name='Статус')
+    items_parsed = models.JSONField(
+        verbose_name='Разобранные данные заказа',
+        default=list,
+        )
+    total_price = models.IntegerField(
+        verbose_name='Общая стоимость',
+        default=0
+        )
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOISES,
+        default='В ожидании',
+        verbose_name='Статус'
+        )
 
     def __str__(self):
         return f'Заказ № {self.id} на стол № {self.table_number} статус: {self.status}'
@@ -37,8 +49,5 @@ class Order(models.Model):
                 except ValueError:
                     raise ValueError(f"Некорректная цена в блюде: {item}")
             else:
-                raise ValueError(f"Некорректный формат записи блюда и цены: {item}")
+                raise ValueError(f"Некорректный формат записи блюда или цены: {item}")
         return items
-
-    def get_items(self):
-        return json.loads(self.items)

@@ -31,7 +31,7 @@
               <td>{{ order.id }}</td>
               <td>{{ order.table_number }}</td>
               <td>
-                {% for item in order.get_items %}
+                {% for item in order.items_parsed %}
                 <span style="white-space: nowrap;">{{ item.item }} - {{ item.price }} руб.</span><br>
                 {% endfor %}
               </td>
